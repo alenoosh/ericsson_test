@@ -1,26 +1,12 @@
 <?php
 
-    function msisdnLookup($method, $params) {
+    require_once("NumberLookup.php");
 
-        $msisdn = $params[0]["msisdn"];
-        $result = "";
-
-        require_once("NumberLookup.php");
-
-        $lookup = new ericsson\test\NumberLookup();
-
-        if ($msisdn) {
-            $info   = $lookup->parseMsisdn($msisdn);
-            $result = $info[0]["operator_name"] . ", " . $info[0]["country_dial_code"] . ", " .
-                      substr($msisdn, strlen($info[0]["country_dial_code"])) . ", " . $info[0]["country_code"];
-        }
-
-        return $result;
-    }
+    $lookup = new ericsson\test\NumberLookup();
 
     $server = xmlrpc_server_create();
 
-    xmlrpc_server_register_method($server, 'msisdnLookup', 'msisdnLookup');
+    xmlrpc_server_register_method($server, 'msisdnLookup', array($lookup, 'msisdnLookup'));
 
     $request  = file_get_contents('php://input');
     $response = xmlrpc_server_call_method($server, $request, null);

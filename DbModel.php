@@ -22,14 +22,15 @@ class DbModel
 
     public function parseMsisdn($msisdn)
     {
-        $db = $this->connectToDb();
+        $database = $this->connectToDb();
 
-        $query = "select * from ericsson_mobile_operators where first_digits = SUBSTRING('" . $msisdn . "', 1, CHAR_LENGTH(`first_digits`)) AND country_dial_code != ''";
-        $result = $db->query($query);
+        $query = "select * from ericsson_mobile_operators where first_digits = SUBSTRING('" .
+                 $msisdn . "', 1, CHAR_LENGTH(`first_digits`)) AND country_dial_code != ''";
+        $result = $database->query($query);
 
-        $mobileInfo = Array();
-		if ($db->affected_rows > 0) {
-			while ($info = $result->fetch_array(MYSQLI_ASSOC)) {
+        $mobileInfo = array();
+        if ($database->affected_rows > 0) {
+            while ($info = $result->fetch_array(MYSQLI_ASSOC)) {
                 $mobileInfo[] = $info;
             }
         }

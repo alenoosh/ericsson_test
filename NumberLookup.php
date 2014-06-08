@@ -1,6 +1,7 @@
 <?php
 
 namespace ericsson\test;
+
 use ericsson\dbmodel as dbmodel;
 
 class NumberLookup
@@ -13,8 +14,22 @@ class NumberLookup
     {
         require_once('DbModel.php');
 
-        $db     = new dbmodel\DbModel();
-        $result = $db->parseMsisdn($msisdn);
+        $database = new dbmodel\DbModel();
+        $result   = $database->parseMsisdn($msisdn);
+
+        return $result;
+    }
+
+    public function msisdnLookup($method, $params)
+    {
+        $msisdn = $params[0]["msisdn"];
+        $result = "";
+
+        if ($msisdn) {
+            $info   = $this->parseMsisdn($msisdn);
+            $result = $info[0]["operator_name"] . ", " . $info[0]["country_dial_code"] . ", " .
+                      substr($msisdn, strlen($info[0]["country_dial_code"])) . ", " . $info[0]["country_code"];
+        }
 
         return $result;
     }
