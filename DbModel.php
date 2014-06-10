@@ -15,7 +15,19 @@ class DbModel
         $pass     = 'root';
         $database = 'ericsson_test';
 
-        $conn = new \mysqli($server, $user, $pass, $database);
+        // Check whether the database exists
+        $conn     = \mysqli_connect($server, $user, $pass);
+        $dbExists = \mysqli_select_db($conn, $database);
+
+        if (!$dbExists) {
+            $sqlFile = 'ericsson_test.sql';
+
+            $command = 'mysql -h' . $server . ' -u' . $user . ' -p' . $pass . ' < ' . $sqlFile;
+            exec($command, $output = array(), $worked);
+            if ($worked == 0) {
+                $conn = \mysqli_connect($server, $user, $pass, $database);
+            }
+        }
 
         return $conn;
     }
@@ -26,11 +38,11 @@ class DbModel
 
         $query = "select * from ericsson_mobile_operators where first_digits = SUBSTRING('" .
                  $msisdn . "', 1, CHAR_LENGTH(`first_digits`)) AND country_dial_code != ''";
-        $result = $database->query($query);
+        $result = \mysqli_query($database, $query);
 
         $mobileInfo = array();
-        if ($database->affected_rows > 0) {
-            while ($info = $result->fetch_array(MYSQLI_ASSOC)) {
+        if (!empty($result)) {
+            while ($info = \mysqli_fetch_array($result, MYSQL_ASSOC)) {
                 $mobileInfo[] = $info;
             }
         }

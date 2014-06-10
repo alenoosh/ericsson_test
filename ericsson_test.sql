@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 -- Database: `ericsson_test`
 --
 
+CREATE DATABASE `ericsson_test`;
 use `ericsson_test`;
 
 -- --------------------------------------------------------
