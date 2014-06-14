@@ -8,11 +8,14 @@ class DbModel
     {
     }
 
+    /*
+     * connectToDb: tries to connect to the specified database and if the database does not exist,
+     *              executes the available sql file to create the database and populate it with data
+     */
     public function connectToDb()
     {
         require('dbConfig.php');
 
-        // Check whether the database exists
         $conn     = \mysqli_connect(ERICSSON_SERVER, ERICSSON_MYSQL_USER, ERICSSON_MYSQL_PASS);
         $dbExists = \mysqli_select_db($conn, ERICSSON_MYSQL_DB);
 
@@ -34,6 +37,9 @@ class DbModel
         return $conn;
     }
 
+    /*
+     * parseMsisdn: searches for mobile operator information of the given msisdn value
+     */
     public function parseMsisdn($msisdn)
     {
         $database = $this->connectToDb();
