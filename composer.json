@@ -1,6 +1,0 @@
-{
-    "require": {
-        "phpmd/phpmd" : "1.4.*",
-        "sebastian/phpcpd": "*"
-    }
-}
