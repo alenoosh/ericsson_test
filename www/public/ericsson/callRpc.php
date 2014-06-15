@@ -19,7 +19,7 @@ try {
              )
     );
 
-    $file = file_get_contents('http://localhost/ericsson/rpcIndex.php', false, $context);
+    $file = file_get_contents('http://localhost/ericsson/www/public/ericsson/rpcIndex.php', false, $context);
 
     if (!$file) {
         throw new Exception('Unable to get response from web service');
