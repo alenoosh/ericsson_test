@@ -16,6 +16,12 @@ exec
 
 exec
 {
+    'apt-get install dos2unix':
+        command => '/usr/bin/apt-get install dos2unix'
+}
+
+exec
+{
     'dos2unix checks.sh':
         command => 'dos2unix /var/www/public/ericsson/checks.sh',
         require => Exec['apt-get install dos2unix']
