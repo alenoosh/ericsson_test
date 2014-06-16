@@ -14,6 +14,20 @@ exec
         require => Exec['add php55 apt-repo']
 }
 
+exec
+{
+    'dos2unix checks.sh':
+        command => 'dos2unix /var/www/public/ericsson/checks.sh',
+        require => Exec['apt-get install dos2unix']
+}
+
+exec
+{
+    'dos2unix unitTest.sh':
+        command => 'dos2unix /var/www/public/ericsson/unitTest.sh',
+        require => Exec['apt-get install dos2unix']
+}
+
 include bootstrap
 include other #curl
 include php55 #specific setup steps for 5.5
