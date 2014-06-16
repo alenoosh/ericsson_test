@@ -17,7 +17,7 @@ class php
         "php5-memcached",
         "php5-xmlrpc",
         "libxml2",
-        "php-codesniffer",
+        #"php-codesniffer",
         "vim"
     ]
 
